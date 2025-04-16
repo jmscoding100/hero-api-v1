@@ -14,6 +14,7 @@ router.get('/alignment/:alignment', (req, res)=>{
     dao.findByAlignment(res, dao.table, req.params.alignment)
 })
 
+
 //sort
 router.get('/sort', (req, res)=>{
     dao.sort(res, dao.table)

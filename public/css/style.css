@@ -1,0 +1,13 @@
+*{box-sizing: border-box;}
+
+/* it's linked  */
+
+body{
+    margin: 0;
+    padding: 0;
+}
+
+
+#topNav{
+    justify-content: space-evenly;
+}

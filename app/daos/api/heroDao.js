@@ -26,21 +26,46 @@ const heroDao = {
 
 
     findHeroById:(res, table, id)=>{
+
+        let powers = []
+
         con.query(
-            `SELECT h.hero_id, h.hero_name, h.first_name, h.last_name, h.alias, f.franchise, s.species, h.place_of_origin, h.first_app, h.alignment, h.img_url
-            FROM hero h
-            JOIN franchise f using (franchise_id)
-            JOIN species s using (species_id)
-            WHERE h.hero_id = ${id};`,
-            (error, rows) =>{
+            `SELECT ${table}.hero_id, p.power
+            FROM ${table}
+            JOIN hero_to_power hp on ${table}.hero_id = hp.hero_id
+            JOIN power p on p.power_id = hp.power_id
+            WHERE ${table}.hero_id = ${id};`,
+            (error, rows)=>{
                 if(!error){
-                    if(rows.length === 1){
-                        res.json(...rows)
-                    } else {
-                        res.json(rows)
-                    }
+                    console.log(Object.values(rows))
+
+                    Object.values(rows).forEach(obj => {
+                        powers.push(obj.power)
+                    })
+                    con.query(
+                        `SELECT h.hero_id, h.hero_name, h.first_name, h.last_name, h.alias, f.franchise, s.species, h.place_of_origin, h.first_app, h.alignment, h.img_url
+                        FROM hero h
+                        JOIN franchise f using (franchise_id)
+                        JOIN species s using (species_id)
+                        WHERE h.hero_id = ${id};`,
+                        (error, rows) =>{
+
+                            rows.forEach(row => {
+                                row.powers = powers
+                            })
+                            if(!error){
+                                if(rows.length === 1){
+                                    res.json(...rows)
+                                } else {
+                                    res.json(rows)
+                                }
+                            } else {
+                                console.log(console.log(`DAO ERROR: ${table}`, error))
+                            }
+                        }
+                    )
                 } else {
-                    console.log(console.log(`DAO ERROR: ${table}`, error))
+                    console.log(error)
                 }
             }
         )
