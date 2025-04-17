@@ -10,7 +10,7 @@ router.get('/', (req, res)=>{
 })
 
 router.get('/species/:species', (req, res)=>{
-    dao.findHeroesBySpecies(res, dao.table, req.params.power)
+    dao.findHeroesBySpecies(res, dao.table, req.params.species)
 })
 
 

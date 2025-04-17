@@ -12,14 +12,10 @@ const franchiseDao = {
             WHERE f.franchise = '${franchise}'
             ORDER BY h.hero_id;`,
             (error, rows) =>{
-                if(!error){
-                    if(rows.length === 1){
-                        res.json(...rows)
-                    } else {
-                        res.json(rows)
-                    }
+                if(!error) {
+                    res.json(rows)
                 } else {
-                    console.log(console.log(`DAO ERROR: ${table}`, error))
+                    console.log(`DAO ERROR : ${table}`, error)
                 }
             }
         )

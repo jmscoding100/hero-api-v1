@@ -112,24 +112,143 @@ router.get('/heroes/:id', (req, res)=>{
 
 //subpages
 
-const subData = ['power', 'franchise', 'team', 'species']
+router.get('/power', (req, res)=>{
 
-subData.forEach(dataPoint => {
+    const url = `http://localhost:${PORT}/api/power`
 
-    router.get(`/${dataPoint}`, (req, res)=>{
-
-        const url = `http://localhost:${PORT}/api/${dataPoint}`
-    
-        axios.get(url)
-            .then(resp =>{
-                res.render('pages/allData', {
-                    title: dataPoint,
-                    name: `All ${dataPoint}`,
-                    data: resp.data
-                })
+    axios.get(url)
+        .then(resp =>{
+            res.render('pages/allPower', {
+                title: 'Powers',
+                name: 'All Powers',
+                data: resp.data
             })
-    })
+        })
 })
+
+
+
+router.get('/power/pow/:power', (req, res)=>{
+    const power = req.params.power
+
+    const url = `http://localhost:${PORT}/api/power/pow/${power}`
+
+
+    axios.get(url)
+        .then(resp=>{
+            res.render('pages/powerSingle',{
+                title: power,
+                name: `Heroes with ${power}`,
+                data: resp.data
+            })
+        })
+})
+
+
+router.get('/franchise', (req, res)=>{
+
+    const url = `http://localhost:${PORT}/api/franchise`
+
+    axios.get(url)
+        .then(resp =>{
+            res.render('pages/allFranchise', {
+                title: 'Franchises',
+                name: 'All Franchises',
+                data: resp.data
+            })
+        })
+})
+
+
+
+router.get('/franchise/fran/:franchise', (req, res)=>{
+    const franchise = req.params.franchise
+
+    const url = `http://localhost:${PORT}/api/franchise/fran/${franchise}`
+
+
+    axios.get(url)
+        .then(resp=>{
+            res.render('pages/franchiseSingle',{
+                title: franchise,
+                name: `The Heroes of the ${franchise} Franchise`,
+                data: resp.data
+            })
+        })
+})
+
+
+
+router.get('/species', (req, res)=>{
+
+    const url = `http://localhost:${PORT}/api/species`
+
+    axios.get(url)
+        .then(resp =>{
+            res.render('pages/allSpecies', {
+                title: 'Species',
+                name: 'All Species',
+                data: resp.data
+            })
+        })
+})
+
+
+router.get('/species/species/:species', (req, res)=>{
+    const species = req.params.species
+
+    const url = `http://localhost:${PORT}/api/species/species/${species}`
+
+
+    axios.get(url)
+        .then(resp=>{
+            res.render('pages/speciesSingle',{
+                title: species,
+                name: `Which one is ${species}`,
+                data: resp.data
+            })
+        })
+})
+
+
+
+
+router.get('/team', (req, res)=>{
+
+    const url = `http://localhost:${PORT}/api/team`
+
+    axios.get(url)
+        .then(resp =>{
+            res.render('pages/allTeams', {
+                title: 'Teams',
+                name: 'All Teams',
+                data: resp.data
+            })
+        })
+})
+
+
+router.get('/team/team/:team', (req, res)=>{
+    const team = req.params.team
+
+    const url = `http://localhost:${PORT}/api/team/team/${team}`
+
+
+    axios.get(url)
+        .then(resp=>{
+            res.render('pages/teamSingle',{
+                title: team,
+                name: `Which one is ${team}`,
+                data: resp.data
+            })
+        })
+})
+
+
+
+
+
+
 
 
 

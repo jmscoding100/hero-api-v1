@@ -10,19 +10,15 @@ const powerDao = {
             FROM hero h
             JOIN franchise f using (franchise_id)
             JOIN species s using (species_id)
-            JOIN hero_to_power ht ON h.hero_id = hp.hero_id
-            JOIN power p  on hp.team_id = p.power_id
+            JOIN hero_to_power hp ON h.hero_id = hp.hero_id
+            JOIN power p  ON hp.power_id = p.power_id
             WHERE p.power = '${power}'
             ORDER BY h.hero_id;`,
             (error, rows) =>{
-                if(!error){
-                    if(rows.length === 1){
-                        res.json(...rows)
-                    } else {
-                        res.json(rows)
-                    }
+                if(!error) {
+                    res.json(rows)
                 } else {
-                    console.log(console.log(`DAO ERROR: ${table}`, error))
+                    console.log(`DAO ERROR : ${table}`, error)
                 }
             }
         )
